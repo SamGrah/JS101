@@ -1,0 +1,642 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>How Big is the Room</title><style>
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	text-indent: -1.7em;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, YuMincho, "Yu Mincho", "Hiragino Mincho ProN", "Hiragino Mincho Pro", "Songti TC", "Songti SC", "SimSun", "Nanum Myeongjo", NanumMyeongjo, Batang, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC', 'Noto Sans CJK KR'; }
+
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC', 'Noto Sans Mono CJK KR'; }
+
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, YuMincho, "Yu Mincho", "Hiragino Mincho ProN", "Hiragino Mincho Pro", "Songti TC", "Songti SC", "SimSun", "Nanum Myeongjo", NanumMyeongjo, Batang, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC', 'Noto Sans CJK KR'; }
+
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC', 'Noto Sans Mono CJK KR'; }
+
+.highlight-default {
+}
+.highlight-gray {
+	color: rgb(155,154,151);
+}
+.highlight-brown {
+	color: rgb(100,71,58);
+}
+.highlight-orange {
+	color: rgb(217,115,13);
+}
+.highlight-yellow {
+	color: rgb(223,171,1);
+}
+.highlight-teal {
+	color: rgb(15,123,108);
+}
+.highlight-blue {
+	color: rgb(11,110,153);
+}
+.highlight-purple {
+	color: rgb(105,64,165);
+}
+.highlight-pink {
+	color: rgb(173,26,114);
+}
+.highlight-red {
+	color: rgb(224,62,62);
+}
+.highlight-gray_background {
+	background: rgb(235,236,237);
+}
+.highlight-brown_background {
+	background: rgb(233,229,227);
+}
+.highlight-orange_background {
+	background: rgb(250,235,221);
+}
+.highlight-yellow_background {
+	background: rgb(251,243,219);
+}
+.highlight-teal_background {
+	background: rgb(221,237,234);
+}
+.highlight-blue_background {
+	background: rgb(221,235,241);
+}
+.highlight-purple_background {
+	background: rgb(234,228,242);
+}
+.highlight-pink_background {
+	background: rgb(244,223,235);
+}
+.highlight-red_background {
+	background: rgb(251,228,228);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(55, 53, 47, 0.6);
+	fill: rgba(55, 53, 47, 0.6);
+}
+.block-color-brown {
+	color: rgb(100,71,58);
+	fill: rgb(100,71,58);
+}
+.block-color-orange {
+	color: rgb(217,115,13);
+	fill: rgb(217,115,13);
+}
+.block-color-yellow {
+	color: rgb(223,171,1);
+	fill: rgb(223,171,1);
+}
+.block-color-teal {
+	color: rgb(15,123,108);
+	fill: rgb(15,123,108);
+}
+.block-color-blue {
+	color: rgb(11,110,153);
+	fill: rgb(11,110,153);
+}
+.block-color-purple {
+	color: rgb(105,64,165);
+	fill: rgb(105,64,165);
+}
+.block-color-pink {
+	color: rgb(173,26,114);
+	fill: rgb(173,26,114);
+}
+.block-color-red {
+	color: rgb(224,62,62);
+	fill: rgb(224,62,62);
+}
+.block-color-gray_background {
+	background: rgb(235,236,237);
+}
+.block-color-brown_background {
+	background: rgb(233,229,227);
+}
+.block-color-orange_background {
+	background: rgb(250,235,221);
+}
+.block-color-yellow_background {
+	background: rgb(251,243,219);
+}
+.block-color-teal_background {
+	background: rgb(221,237,234);
+}
+.block-color-blue_background {
+	background: rgb(221,235,241);
+}
+.block-color-purple_background {
+	background: rgb(234,228,242);
+}
+.block-color-pink_background {
+	background: rgb(244,223,235);
+}
+.block-color-red_background {
+	background: rgb(251,228,228);
+}
+.select-value-color-default { background-color: rgba(206,205,202,0.5); }
+.select-value-color-gray { background-color: rgba(155,154,151, 0.4); }
+.select-value-color-brown { background-color: rgba(140,46,0,0.2); }
+.select-value-color-orange { background-color: rgba(245,93,0,0.2); }
+.select-value-color-yellow { background-color: rgba(233,168,0,0.2); }
+.select-value-color-green { background-color: rgba(0,135,107,0.2); }
+.select-value-color-blue { background-color: rgba(0,120,223,0.2); }
+.select-value-color-purple { background-color: rgba(103,36,222,0.2); }
+.select-value-color-pink { background-color: rgba(221,0,129,0.2); }
+.select-value-color-red { background-color: rgba(255,0,26,0.2); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="7b54d927-2c8e-4db1-87f2-8655396aa955" class="page sans"><header><h1 class="page-title">How Big is the Room</h1><table class="properties"><tbody><tr class="property-row property-row-select"><th><span class="icon property-icon"><svg viewBox="0 0 14 14" style="width:14px;height:14px;display:block;fill:rgba(55, 53, 47, 0.4);flex-shrink:0;-webkit-backface-visibility:hidden" class="typesSelect"><path d="M7,13 C10.31348,13 13,10.31371 13,7 C13,3.68629 10.31348,1 7,1 C3.68652,1 1,3.68629 1,7 C1,10.31371 3.68652,13 7,13 Z M3.75098,5.32278 C3.64893,5.19142 3.74268,5 3.90869,5 L10.09131,5 C10.25732,5 10.35107,5.19142 10.24902,5.32278 L7.15771,9.29703 C7.07764,9.39998 6.92236,9.39998 6.84229,9.29703 L3.75098,5.32278 Z"></path></svg></span>Category</th><td><span class="selected-value">Easy 1</span></td></tr><tr class="property-row property-row-select"><th><span class="icon property-icon"><svg viewBox="0 0 14 14" style="width:14px;height:14px;display:block;fill:rgba(55, 53, 47, 0.4);flex-shrink:0;-webkit-backface-visibility:hidden" class="typesSelect"><path d="M7,13 C10.31348,13 13,10.31371 13,7 C13,3.68629 10.31348,1 7,1 C3.68652,1 1,3.68629 1,7 C1,10.31371 3.68652,13 7,13 Z M3.75098,5.32278 C3.64893,5.19142 3.74268,5 3.90869,5 L10.09131,5 C10.25732,5 10.35107,5.19142 10.24902,5.32278 L7.15771,9.29703 C7.07764,9.39998 6.92236,9.39998 6.84229,9.29703 L3.75098,5.32278 Z"></path></svg></span>Course</th><td><span class="selected-value select-value-color-brown">JS101</span></td></tr><tr class="property-row property-row-number"><th><span class="icon property-icon"><svg viewBox="0 0 14 14" style="width:14px;height:14px;display:block;fill:rgba(55, 53, 47, 0.4);flex-shrink:0;-webkit-backface-visibility:hidden" class="typesNumber"><path d="M4.46191,0 C3.8667,0 3.38428,0.482422 3.38428,1.07751 L3.38428,3.38425 L1.07764,3.38425 C0.482422,3.38425 0,3.86667 0,4.46179 C0,5.05688 0.482422,5.53931 1.07764,5.53931 L3.38428,5.53931 L3.38428,8.46063 L1.07764,8.46063 C0.482422,8.46063 0,8.94308 0,9.53818 C0,10.1333 0.482422,10.6157 1.07764,10.6157 L3.38428,10.6157 L3.38428,12.9224 C3.38428,13.5175 3.8667,13.9999 4.46191,13.9999 C5.05664,13.9999 5.53906,13.5175 5.53906,12.9224 L5.53906,10.6157 L8.46045,10.6157 L8.46045,12.9224 C8.46045,13.5175 8.94287,13.9999 9.53809,13.9999 C10.1333,13.9999 10.6157,13.5175 10.6157,12.9224 L10.6157,10.6157 L12.9224,10.6157 C13.5176,10.6157 14,10.1333 14,9.53818 C14,8.94308 13.5176,8.46063 12.9224,8.46063 L10.6157,8.46063 L10.6157,5.53931 L12.9224,5.53931 C13.5176,5.53931 14,5.05688 14,4.46179 C14,3.86667 13.5176,3.38425 12.9224,3.38425 L10.6157,3.38425 L10.6157,1.07751 C10.6157,0.482422 10.1333,0 9.53809,0 C8.94287,0 8.46045,0.482422 8.46045,1.07751 L8.46045,3.38425 L5.53906,3.38425 L5.53906,1.07751 C5.53906,0.482422 5.05664,0 4.46191,0 Z M5.53906,8.46063 L5.53906,5.53931 L8.46045,5.53931 L8.46045,8.46063 L5.53906,8.46063 Z"></path></svg></span>Exercise Number</th><td>1.4</td></tr><tr class="property-row property-row-select"><th><span class="icon property-icon"><svg viewBox="0 0 14 14" style="width:14px;height:14px;display:block;fill:rgba(55, 53, 47, 0.4);flex-shrink:0;-webkit-backface-visibility:hidden" class="typesSelect"><path d="M7,13 C10.31348,13 13,10.31371 13,7 C13,3.68629 10.31348,1 7,1 C3.68652,1 1,3.68629 1,7 C1,10.31371 3.68652,13 7,13 Z M3.75098,5.32278 C3.64893,5.19142 3.74268,5 3.90869,5 L10.09131,5 C10.25732,5 10.35107,5.19142 10.24902,5.32278 L7.15771,9.29703 C7.07764,9.39998 6.92236,9.39998 6.84229,9.29703 L3.75098,5.32278 Z"></path></svg></span>Status</th><td><span class="selected-value select-value-color-yellow">Current</span></td></tr></tbody></table></header><div class="page-body"><p id="465530a7-4660-487b-b7ce-f3f3171b9be3" class="block-color-blue_background"><strong>Problem Statement</strong><div class="indented"><p id="a7a12ff4-2a5f-4627-bb8d-548a0c16cead" class="block-color-gray">Build a program that asks the user to enter the length and width of a room in meters, and then logs the area of the room to the console in both square meters and square feet.</p><p id="7d801eaf-307c-4b09-af65-2177b9a47d70" class="block-color-gray">Note: 1 square meter === 10.7639 square feet</p><p id="a9f94987-9a68-4d31-a93c-06a531202827" class="block-color-gray">Do not worry about validating the input at this time. Use the <code>readlineSync.prompt</code> method to collect user input</p><p id="4960041a-75d2-4ff6-875a-294badd4b68d" class="block-color-gray">Example:</p><pre id="27489e43-7797-4a96-bea9-26ba7518a655" class="code"><code>Enter the length of the room in meters:
+10
+Enter the width of the room in meters:
+7
+The area of the room is 70.00 square meters (753.47 square feet).</code></pre><p id="8c663840-e7bc-4c84-90fa-2814597416b2" class="">
+<strong>Further Exploration</strong></p><p id="87bcbcc1-10ee-40c3-b01f-bb48ef81dcb3" class="block-color-gray">Modify the program so that it asks the user for the input type (meters or feet). Compute for the area accordingly, and log it and its conversion in parentheses.</p><p id="4a3295fe-3ca9-48f6-8b9c-dfde573965d9" class="">
+</p></div></p><p id="b7d30682-73a6-403e-bc8d-e8f06c2feb0f" class="block-color-teal_background"><strong>Understanding the Problem</strong><div class="indented"><div id="0fa73542-b825-426a-b539-c70e8fc5fb6a" class="column-list"><div id="8376b6d5-6125-48b3-a559-e3a9bb25e754" style="width:50%" class="column"><p id="fb302c81-ad37-4070-9f6c-16993f957010" class="block-color-brown">INPUTS</p><p id="7bbd091e-0c01-4fe2-994e-5c43112892a7" class="block-color-gray"><strong>height</strong>: positive number</p><p id="906263f6-4c40-4ae2-85c4-c4b714e09dfe" class="block-color-gray"><strong>width</strong>: positive number</p><p id="ea73458b-ee77-42bd-8047-315421ee5eab" class="block-color-gray"><strong>unitType</strong>: string</p></div><div id="cf49b8ea-b3c9-4eb6-af99-784cec52211b" style="width:50%" class="column"><p id="2d9a0ef0-c60f-4f75-8fd3-89258041f8ed" class="block-color-brown">OUTPUTS</p><p id="30eab91b-3fb7-446f-9c88-fd70fec3893b" class="block-color-gray"><strong>statement</strong>: string</p><p id="94b93446-7047-48bb-9016-06c7b9492e06" class="block-color-gray"><strong>imperialArea</strong>: number</p><p id="26cd36d0-dff0-446f-b33f-55e6585666a1" class="block-color-gray"><strong>metricArea</strong>: number</p></div></div><p id="091c5eda-bf14-47f9-95fa-5cade94b255c" class="block-color-brown">CLARIFYING QUESTIONS</p><p id="a9879a99-105b-431c-9602-a456fdbbd4c8" class="block-color-gray">Should areas be rounded up or rounded down to the hundredths decimal place?
+    - rounded up</p><p id="a15de18b-7193-4a5b-8615-71a67eac077e" class="block-color-gray">Should the unit conversion always be printed second in the string?
+    - yes</p><p id="1e586416-3921-4a69-a94b-8ddabd0b3ac5" class="block-color-brown">RULES<div class="indented"><p id="383acb88-2b58-4e7e-a70e-f8e7af3276af" class="block-color-brown">EXPLICIT:<div class="indented"><ol id="97053254-e715-4ca6-8da3-5c18b4ef0859" class="block-color-gray numbered-list" start="1"><li>multiply user inputs to derive area</li></ol><ol id="29353b0b-f1c2-4579-b01e-2fc3cb1ae4a6" class="block-color-gray numbered-list" start="2"><li>calculate area for both metric and imperial unit systems</li></ol><ol id="cde1120b-a500-4362-8a95-19803ac223ce" class="block-color-gray numbered-list" start="3"><li>converted value, as indicated by user, should be be printed in parenthesis</li></ol><p id="49557a21-26e0-4bf2-a524-555b91196e2e" class="">
+</p></div></p><p id="419915aa-1f2c-4ef0-9782-10d10f55fd6f" class="block-color-brown">IMPLICIT:<div class="indented"><ol id="bebcd827-2708-41ce-ac39-d54742fc8ee0" class="block-color-gray numbered-list" start="1"><li>the area values should be limited to the hundredths decimal place</li></ol><ol id="ccf24cd6-56e7-4ba4-a18f-d8274945084e" class="block-color-gray numbered-list" start="2"><li>print converted value at end of string</li></ol></div></p></div></p><p id="8f6905db-8323-48c5-b4b9-803597008bb3" class="block-color-brown">IDEAS<div class="indented"><p id="67645184-e154-4735-951c-41ba8a9221de" class="block-color-gray">N/A</p><p id="dc10bd73-d20d-4e5e-9dae-e986c003fc35" class="">
+</p></div></p></div></p><p id="19aa70fd-3df2-4ffa-9fc7-b07257d01e9b" class="block-color-purple_background"><strong>Examples / Test Cases</strong><div class="indented"><p id="515343af-6d0c-455b-906d-caf76ea78ee9" class=""><em>Rule Set Derived Cases</em></p><ol id="b318c244-9cad-453f-bc13-5ee40b6ae239" class="block-color-gray numbered-list" start="1"><li>calcArea(1, 1, &#x27;feet&#x27;)   ⇒  imperial: 1, (metric: 0.09)</li></ol><ol id="e81020f7-4bcd-4909-aac3-b4e39962a071" class="block-color-gray numbered-list" start="2"><li>calcArea(0.5, 0.5, &#x27;feet&#x27;)   ⇒  imperial: 2, (metric: 0.02)</li></ol><ol id="69ec9caf-436c-4188-9827-62f124e18a85" class="block-color-gray numbered-list" start="3"><li>calcArea(10, 100, &#x27;feet&#x27;)   ⇒  imperial: 1000, (metric: 92.9)</li></ol><ol id="ce7608ae-5018-45aa-9918-e5c0454d9327" class="block-color-gray numbered-list" start="4"><li>calcArea(10, 100, &#x27;meters&#x27;)   ⇒  (imperial: 10763.6), metric: 1000</li></ol><p id="402dee72-c05e-430f-a184-63eabf1a8722" class="">
+</p><p id="a6b6fde6-d66d-4b42-8fb3-f9cd06e9ce87" class=""><em>Invalid Input Derived Cases</em></p><p id="4b3cc0d3-51ef-4b47-be38-527f3646d134" class="block-color-gray">none</p><p id="6cbd3f24-f95f-42f9-90fe-81328e63b815" class="">
+</p><p id="bfd4cdca-8f43-4f9c-91dd-3942bf45d70f" class=""><em>Edge Derived Cases</em></p><ol id="85769236-631b-4edf-9762-5851d140712c" class="block-color-gray numbered-list" start="1"><li>calcArea(0.2, 0.2, &#x27;meters&#x27;)   ⇒  imperial: 0.22, metric: 0.02</li></ol><ol id="42fd15d5-c944-48d6-b831-5165715bb00c" class="block-color-gray numbered-list" start="2"><li>calcArea(0.2, 0.2, &#x27;feet&#x27;)   ⇒  imperial: 0.04, (metric: 0.00)</li></ol><p id="a020feb0-12d7-4286-9e96-245483e2bb99" class="">
+</p></div></p><p id="eb9ae0f2-4414-415a-963d-4f3d9bf0025b" class="block-color-pink_background"><strong>Data Structures</strong><div class="indented"><div id="3891047d-1875-41aa-ad43-fb17cee50400" class="column-list"><div id="9d6e0f48-d107-4a87-a199-0437fb65cc65" style="width:50%" class="column"><p id="dbf2b8ab-8a4a-42ee-a74a-87a7e05e5d75" class="">INPUTS</p><p id="4718c424-c4b3-4c91-81bb-363e6646a213" class="block-color-gray">number</p></div><div id="c62f56a5-c1ba-418d-8c9d-f1cbfa64dd23" style="width:50%" class="column"><p id="af39eda7-41d0-4afb-a4e4-852aa55ad964" class="">RULES</p><p id="fbb24c2f-b7e6-47b6-a650-83c93d948cb8" class="block-color-gray">none</p></div></div><p id="bf50a4b5-194a-4111-9b8f-74248e1a7235" class="">
+</p></div></p><p id="3f0d5514-f629-4550-8e91-7ae279837c26" class="block-color-orange_background"><strong>Algorithm</strong><div class="indented"><p id="c106a956-73e4-4e38-844e-bd9878bf7ff1" class="block-color-gray">1 - prompt user for and store numbers as <code>height</code>, <code>width</code> , and <code>unitType</code></p><p id="f98839db-ee06-4031-b413-4206e0a06ec2" class="block-color-gray">2 - calculate the product of <code>height</code> and <code>width</code>, as <code>area</code></p><p id="e87ecf6f-5b47-4c5c-84b8-c745e0c12033" class="block-color-gray">3 - embed <code>area </code>within string containing unit type, as <code>defaultUnit</code></p><p id="4edba8f4-2344-46c2-908b-c49b4869b61e" class="block-color-gray">4 - embed area, converted according to <code>unitType</code>, within string containing converted <code>unitType</code>, as <code>convertedUnit</code></p><p id="52d7d9f3-8413-43bb-a2fc-7e9579c9552d" class="block-color-gray">2 - log strings concatenated</p></div></p><p id="12e6115e-6d09-4f95-b724-a6eea8c60901" class="">
+</p></div></article></body></html>
