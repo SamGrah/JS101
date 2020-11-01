@@ -17,8 +17,20 @@ function wait(ms) {
   }
 }
 
+function calcResult(operation, number1, number2) {
+  if (operation === '1') {
+    return Number(number1) + Number(number2);
+  } else if (operation === '2') {
+    return Number(number1) - Number(number2);
+  } else if (operation === '3') {
+    return Number(number1) * Number(number2);
+  } else {
+    return Number(number1) / Number(number2);
+  }
+}
+
 prompt(jsonMessages.welcomeMsg);
-wait(2000);
+wait(1000);
 console.clear();
 
 let continueCalc = true;
@@ -48,21 +60,7 @@ do {
     operation = readline.question();
   }
 
-  let output;
-  switch (operation) {
-    case '1':
-      output = Number(number1) + Number(number2);
-      break;
-    case '2':
-      output = Number(number1) - Number(number2);
-      break;
-    case '3':
-      output = Number(number1) * Number(number2);
-      break;
-    case '4':
-      output = Number(number1) / Number(number2);
-      break;
-  }
+  let output = calcResult(operation, number1, number2);
 
   prompt(`This result is: ${output}\n\n`);
   prompt(jsonMessages.additionalCal);
@@ -73,10 +71,10 @@ do {
     newCalcResponse = readline.question().toLowerCase();
   }
 
-  continueCalc = newCalcResponse === 'yes';
+  continueCalc = (newCalcResponse === 'yes');
   console.clear();
 
-} while (continueCalc === true);
+} while (continueCalc);
 
 console.log(jsonMessages.applicationHeader);
 prompt('Have a nice day!');
