@@ -1,0 +1,11 @@
+{
+  "welcomeMsg" : "Welcome to JS CALCULATOR!\n",
+  "applicationHeader" : "==== JS CALCULATOR ====\n",
+  "firstPrompt" : "What's the first number?",
+  "firstPromptErr" : "Hmm... that doesn't look like a valid number1.",
+  "secondPrompt": "What's the second number?", 
+  "secondPromptErr" : "Hmm... that doesn't look like a valid number2.",
+  "operationPrompt" : "What operation would you like to perform?\n1) Add 2) Subtract 3) Multiply 4) Divide",
+  "operationPromptErr" : "Must choose 1, 2, 3, or 4",
+  "additionalCal" : "Enter 'Yes' to perform another calculation, 'No' to exit Calculator"
+}
