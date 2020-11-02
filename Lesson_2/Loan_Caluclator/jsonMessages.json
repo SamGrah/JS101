@@ -1,0 +1,12 @@
+{
+  "programHeader" : "=== LOAN CALCULATOR ===\n",
+  "programDescription" : "\nThis program calculates loan length and cost based on parameters provided by the potenial borrower.\n\n",
+  "amountQuery" : "Please enter the total amount of the loan in dollars and cents:",
+  "aprQuery" : "Please enter the loan annual percentage rate (APR): ",
+  "termQuery": "Please enter both the loan term as whole years and months respectively ",
+  "termMonthsQuery": "Term Months: ",
+  "termYearsQuery": "Term Years:",
+  "invaidTermMsg": "Invalid Entry: total loan term must be greater than 0 months",
+  "parametersHeader": "\n----- LOAN PARAMETERS -----",
+   "detailsHeader" : "\n\n------ LOAN RESULTS ------"
+}
