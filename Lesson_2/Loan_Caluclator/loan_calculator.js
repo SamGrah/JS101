@@ -125,7 +125,7 @@ do {
 
 let monthlyPayment = calcMonthlyPayment(amountInCents, monthlyAPR, totalTerm);
 let totalPayments = totalTerm * monthlyPayment;
-let loanCost = totalPayments - amountInCents;
+let loanCost = Number((totalPayments - amountInCents).toFixed(2));
 
 console.clear();
 console.log(jsonMessages.programHeader);
