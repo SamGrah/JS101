@@ -68,23 +68,29 @@ function prompt(message) {
   console.log('==> ' + message);
 }
 
-function invalidInput(number, type = '') {
-  if (number.trimStart() === '' || Number.isNaN(Number(number))) return true;
-  if (type === 'amount' && Number(number) <= 0) {
-    return true;
-  } else if ((type === 'term') && (number % 1 !== 0)) {
-    return true;
-  } else if (Number(number) < 0) {
-    return true;
-  } else {
-    return false;
-  }
+function invalidAmount(number) {
+  let value = Number(number);
+  if (number.trimStart() === '' || Number.isNaN(value)) return true;
+  return Number(number) <= 0;
 }
 
-function userInput(queryMessage, valueType = '') {
-  prompt(queryMessage, valueType);
+function invalidIntRate(number) {
+  let value = Number(number);
+  if (number.trimStart() === '' || Number.isNaN(value)) return true;
+  return value <= 0;
+}
+
+function invalidTerm(number, inputType = '') {
+  let value = Number(number);
+  if (number.trimStart() === '' || Number.isNaN(value)) return true;
+  if (inputType === 'months' && value > 12) return true;
+  return (value % 1 !== 0) || (value < 0);
+}
+
+function userInput(queryMessage, validityTest, type = '') {
+  prompt(queryMessage);
   let number  = readline.question();
-  while (invalidInput(number, valueType)) {
+  while (validityTest(number, type)) {
     prompt(`'${number}' is not a valid entry`);
     prompt(queryMessage);
     number = readline.question();
@@ -107,17 +113,17 @@ console.clear();
 console.log(jsonMessages.programHeader);
 console.log(jsonMessages.programDescription);
 
-let loanAmount = userInput(jsonMessages.amountQuery, 'amount');
+let loanAmount = userInput(jsonMessages.amountQuery, invalidAmount);
 let amountInCents = Number(parseFloat(loanAmount).toFixed(2));
 
-let annualIntRate = userInput(jsonMessages.aprQuery);
+let annualIntRate = userInput(jsonMessages.aprQuery, invalidIntRate);
 let monthlyAPR = (Number(annualIntRate) / 12) / 100;
 
 let termYears, termMonths, totalTerm;
 do {
   prompt(jsonMessages.termQuery);
-  termYears = Number(userInput(jsonMessages.termYearsQuery, 'term'));
-  termMonths = Number(userInput(jsonMessages.termMonthsQuery, 'term'));
+  termYears = Number(userInput(jsonMessages.termYearsQuery, invalidTerm));
+  termMonths = Number(userInput(jsonMessages.termMonthsQuery,invalidTerm, 'months'));
   totalTerm = (termYears * 12) + termMonths;
   if (totalTerm === 0) prompt(jsonMessages.invaidTermMsg);
 } while (totalTerm <= 0);
