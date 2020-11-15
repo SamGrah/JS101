@@ -1,11 +1,13 @@
 const readline = require('readline-sync');
-const SET_OF_OBJECTS = {
+const GAME_MOVES_KEY = {
   r:  { name: 'rock', defeatedBy: ['p', 'sp'] },
   p:  { name: 'paper', defeatedBy: ['r', 'sc']},
   sc: { name: 'scissors', defeatedBy: ['l', 'p']},
   l:  { name: 'lizard', defeatedBy: ['sp','r']},
   sp: { name: 'spock', defeatedBy: ['sc', 'l']}
 };
+const WIN_THRESHOLD = 3;
+const FINAL_ROUND = 5;
 
 
 function displayHeader(rnd, userWins, compWins) {
@@ -24,6 +26,14 @@ function chooseRandomlyFrom(choices) {
   return choices[randomIndex];
 }
 
+function validateUserInput(userEntry, validChoices) {
+  while (!validChoices.includes(userEntry)) {
+    prompt("That's not a valid input");
+    userEntry = readline.question().toLowerCase();
+  }
+  return userEntry;
+}
+
 function displayWinner(player1, player2) {
   console.log('\n\n');
   if (player1 > player2) {
@@ -35,58 +45,66 @@ function displayWinner(player1, player2) {
   }
 }
 
-function displayRoundResult(result, userChoice, compChoice, rnd) {
+function displayRoundResult(result, userChoice, compChoice, currentRnd) {
   console.log('\n');
-  prompt(`You chose ${SET_OF_OBJECTS[userChoice]['name']}, ` +
-  `computer chose ${SET_OF_OBJECTS[compChoice]['name']}`);
+  prompt(`You chose ${GAME_MOVES_KEY[userChoice]['name']}, ` +
+  `computer chose ${GAME_MOVES_KEY[compChoice]['name']}`);
 
-  if (result === "User Wins") prompt(`You win round ${rnd}!\n`);
-  else if (result === "PC Wins") prompt(`Computer wins round ${rnd}\n`);
-  else  prompt(`Round ${rnd} is a tie!`);
+  if (result === "User Wins") prompt(`You win round ${currentRnd}!\n`);
+  else if (result === "PC Wins") prompt(`Computer wins round ${currentRnd}\n`);
+  else  prompt(`Round ${currentRnd} is a tie!`);
 
-  if (rnd < 5) {
+  if (currentRnd < 5) {
     console.log('\n');
-    prompt('Press any key to continue to the next round...');
+    prompt('Press Enter to continue to the next round...');
     readline.question();
   }
 }
 
-let playerWins = 0;
-let computerWins = 0;
-let round = 1;
-while ((playerWins < 3 || computerWins < 3) && round <= 5) {
-  const VALID_CHOICES = Object.keys(SET_OF_OBJECTS);
+let playBestOf5 = 'y';
+while (playBestOf5 === 'y') {
 
-  console.clear();
-  displayHeader(round, playerWins, computerWins);
+  let playerWins = 0;
+  let computerWins = 0;
+  let round = 1;
 
-  prompt(`Choose one: ${VALID_CHOICES.join(', ')}`);
-  let choice = readline.question();
+  while ((playerWins < WIN_THRESHOLD || computerWins < WIN_THRESHOLD) &&
+          round <= FINAL_ROUND) {
+    const VALID_CHOICES = Object.keys(GAME_MOVES_KEY);
 
-  while (!VALID_CHOICES.includes(choice)) {
-    prompt("That's not a valid choice");
-    choice = readline.question();
-  }
+    console.clear();
+    displayHeader(round, playerWins, computerWins);
 
-  let computerChoice = chooseRandomlyFrom(VALID_CHOICES);
+    prompt(`Choose one: ${VALID_CHOICES.join(', ')}`);
+    let choice = readline.question().toLowerCase();
+    choice = validateUserInput(choice, VALID_CHOICES);
 
-  console.log('User Choice: ' + choice);
-  console.log('PC Choice:   ' + computerChoice);
+    // while (!VALID_CHOICES.includes(choice)) {
+    //   prompt("That's not a valid choice");
+    //   choice = readline.question();
+    // }
 
-  if (choice === computerChoice) {
-    displayRoundResult('tie', choice, computerChoice, round);
+    let computerChoice = chooseRandomlyFrom(VALID_CHOICES);
+
+    if (choice === computerChoice) {
+      displayRoundResult('tie', choice, computerChoice, round);
+      round += 1;
+      continue;
+    }
+    if (GAME_MOVES_KEY[choice].defeatedBy.includes(computerChoice)) {
+      computerWins += 1;
+      displayRoundResult('PC Wins', choice, computerChoice, round);
+    } else {
+      playerWins += 1;
+      displayRoundResult('User Wins', choice, computerChoice, round);
+    }
+
     round += 1;
-    continue;
-  }
-  if (SET_OF_OBJECTS[choice].defeatedBy.includes(computerChoice)) {
-    computerWins += 1;
-    displayRoundResult('PC Wins', choice, computerChoice, round);
-  } else {
-    playerWins += 1;
-    displayRoundResult('User Wins', choice, computerChoice, round);
   }
 
-  round += 1;
+  displayWinner(playerWins, computerWins);
+
+  console.log('\n');
+  prompt("Enter 'y' to play again, 'n' to quit");
+  playBestOf5 = validateUserInput(readline.question().toLowerCase(), ['y', 'n']);
 }
-
-displayWinner(playerWins, computerWins);
