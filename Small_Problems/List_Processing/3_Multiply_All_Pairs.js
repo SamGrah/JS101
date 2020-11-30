@@ -35,11 +35,12 @@ RULESET ==>
 --------------------------------------
 
 */
-let sum = (num) => num.toString().split('').reduce((acc, char) => {
-  return acc + Number(char);
-}, 0);
 
+function multiplyAllPairs(arr1, arr2) {
+  let products = [];
+  arr1.forEach(num1 => arr2.forEach(num2 => products.push(num1 * num2)));
+  return products.sort((a,b) => a > b);
+}
 
-console.log(sum(23));           // 5
-console.log(sum(496));          // 19
-console.log(sum(123456789));    // 45
+// [2, 4, 4, 6, 8, 8, 12, 16]
+console.log(multiplyAllPairs([2, 4], [4, 3, 1, 2]));

@@ -15,7 +15,7 @@ MENTAL MODEL ==>
 
     EXAMPLES / TEST CASES
 --------------------------------------
-EXAMPLES ==>
+EXAMPLES ==> 
 
 RULESET ==>
 
@@ -35,11 +35,11 @@ RULESET ==>
 --------------------------------------
 
 */
-let sum = (num) => num.toString().split('').reduce((acc, char) => {
-  return acc + Number(char);
-}, 0);
 
+function leadingSubstrings(str) {
+  return str.split('').map(( _, idx) => str.slice(0, idx + 1));
+}
 
-console.log(sum(23));           // 5
-console.log(sum(496));          // 19
-console.log(sum(123456789));    // 45
+console.log(leadingSubstrings('abc'));
+console.log(leadingSubstrings('a'));
+console.log(leadingSubstrings('xyzzy'));
