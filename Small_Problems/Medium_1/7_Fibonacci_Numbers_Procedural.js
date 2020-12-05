@@ -15,7 +15,7 @@ MENTAL MODEL ==>
 
     EXAMPLES / TEST CASES
 --------------------------------------
-EXAMPLES ==> 
+EXAMPLES ==>
 
 RULESET ==>
 

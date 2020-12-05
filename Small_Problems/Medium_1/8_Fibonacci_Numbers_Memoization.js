@@ -15,7 +15,7 @@ MENTAL MODEL ==>
 
     EXAMPLES / TEST CASES
 --------------------------------------
-EXAMPLES ==> 
+EXAMPLES ==>
 
 RULESET ==>
 
@@ -33,12 +33,19 @@ RULESET ==>
 
     ALGORITHM
 --------------------------------------
-
+1. set fibValues as empty object
+2. if fibValues length - 1 is equal to n, return fibValues[n]
+3.
+4. else return recurseive call passing n - 2 & n - 1
 */
+let fibValues = {};
 
-function fibonacci(n) {
-  if (n <= 2) return 1;
-  return fibonacci(n - 1) + fibonacci(n - 2);
+function fibonacci(num) {
+  if (num <= 2) return 1;
+  if (fibValues[num]) return fibValues[num];
+  else fibValues[num] = fibonacci(num - 2) + fibonacci(num - 1);
+  return fibValues[num];
 }
 
 console.log(fibonacci(49));
+
