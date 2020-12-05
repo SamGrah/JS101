@@ -1,8 +1,10 @@
 const readline = require('readline-sync');
+const COMPUTER_PLAYS_FIRST = false;
 const INITIAL_MARKER = ' ';
 const HUMAN_MARKER = 'X';
 const COMPUTER_MARKER = '0';
 const GAMES_TO_WIN_MATCH = 5;
+const OPTIMAL_SQUARE = '5';
 const WINNING_LINES = [
   [1, 2, 3], [4, 5, 6], [7, 8, 9], // rows
   [1, 4, 7], [2, 5, 8], [3, 6, 9], // columns
@@ -114,7 +116,9 @@ function computerChoosesSquare(board) {
   let availableSquares = emptySquares(board);
   let randomIndex = Math.floor(Math.random() * availableSquares.length);
 
-  let square = availableSquares[randomIndex];
+  let square;
+  if (board[OPTIMAL_SQUARE] === INITIAL_MARKER) square = OPTIMAL_SQUARE;
+  else square = availableSquares[randomIndex];
   board[square] = COMPUTER_MARKER;
 }
 
@@ -145,13 +149,17 @@ function detectWinner(board) {
 
 let gamesLog;
 while (true) {
+  let playerTurnEnabled = !COMPUTER_PLAYS_FIRST;
   let board = initializeBoard();
   gamesLog = { playergamesWon: 0, computergamesWon: 0 };
 
   while (true) {
     displayBoard(board, gamesLog);
 
-    playerChoosesSquare(board);
+    if (playerTurnEnabled) {
+      playerChoosesSquare(board);
+    }
+    playerTurnEnabled = true;
     if (detectWinner(board) === 'Player') gamesLog.playergamesWon += 1;
     else {
       computerChoosesSquare(board);
