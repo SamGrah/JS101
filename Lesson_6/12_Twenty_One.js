@@ -214,8 +214,8 @@ while (true) {
     updateGameStats(gameStats, playerResult, dealerResult);
     readline.question('\nPress enter to proceed');
   } while (gameStats.round < ROUNDS_PER_GAME &&
-           gameStats.playerWins < 3 &&
-           gameStats.dealerWins < 3);
+           (gameStats.playerWins < ROUNDS_PER_GAME / 2) &&
+           (gameStats.dealerWins < ROUNDS_PER_GAME / 2));
 
 
   displayGameStatus(gameStats);
