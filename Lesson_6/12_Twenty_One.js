@@ -7,7 +7,6 @@ const ACE_HIGH_VALUE = 11;
 const HAND_TOP_SCORE = 21;
 const DEALER_HIT_LIMIT = 17;
 
-
 function intitailizeGameStats() {
   return {
     round: 0,
@@ -90,12 +89,11 @@ function initializeHands() {
   return [playerHand, dealerHand];
 }
 
-function dealHand(deck, contestantHand) {
-  let drawnCard1 = randomlySelectCard(deck);
-  deck[drawnCard1] -= 1;
-  let drawnCard2 = randomlySelectCard(deck);
-  deck[drawnCard2] -= 1;
-  contestantHand.cards.push(drawnCard1, drawnCard2);
+function dealCard(deck, contestantHand) {
+  let drawnCard = randomlySelectCard(deck);
+  deck[drawnCard] -= 1;
+  contestantHand.cards.push(drawnCard);
+  updateHandScores(contestantHand);
 }
 
 function updateHandScores(contestantHand) {
@@ -111,6 +109,14 @@ function updateHandScores(contestantHand) {
     contestantHand.highScore += ACE_HIGH_VALUE - ACE_LOW_VALUE;
   }
 }
+
+function dealHands(deck, playerHand, dealerHand) {
+  dealCard(deck, playerHand);
+  dealCard(deck, playerHand);
+  dealCard(deck, dealerHand);
+  dealCard(deck, dealerHand);
+}
+
 
 function prompt(message) {
   console.log(`==> ${message}`);
@@ -137,7 +143,6 @@ function determineCardsMessage(cardsArr, showPartialHand = false) {
   }
   return message;
 }
-
 
 function displayRoundStatus(playerHand, dealerHand, showPartialHand = true) {
   let dealerMessage = determineCardsMessage(dealerHand.cards, showPartialHand);
@@ -166,6 +171,12 @@ function scoreOutcome(contestantHand) {
   return contestantHand.highScore;
 }
 
+function noGameWinner(gameStats) {
+  return gameStats.round < ROUNDS_PER_GAME &&
+         (gameStats.playerWins < ROUNDS_PER_GAME / 2) &&
+         (gameStats.dealerWins < ROUNDS_PER_GAME / 2);
+}
+
 while (true) {
   let gameStats = intitailizeGameStats();
 
@@ -173,10 +184,7 @@ while (true) {
     gameStats.round += 1;
     let deck = initializeDeck();
     let [playerHand, dealerHand] = initializeHands();
-    dealHand(deck, playerHand);
-    dealHand(deck, dealerHand);
-    updateHandScores(playerHand);
-    updateHandScores(dealerHand);
+    dealHands(deck, playerHand, dealerHand);
 
     while (true) {
       displayGameStatus(gameStats);
@@ -187,13 +195,9 @@ while (true) {
       answer = validateAnswers(answer, ['hit', 'stay']);
       if (answer === 'stay') break;
 
-      let drawnCard = randomlySelectCard(deck);
-      deck[drawnCard] -= 1;
-      playerHand.cards.push(drawnCard);
-      updateHandScores(playerHand);
+      dealCard(deck, playerHand);
       if (scoreOutcome(playerHand) === 'busted') break;
     }
-
 
     if (scoreOutcome(playerHand) !== 'busted') {
       while ((dealerHand.lowScore < DEALER_HIT_LIMIT) &&
@@ -213,19 +217,15 @@ while (true) {
     displayRoundResult(playerResult, dealerResult);
     updateGameStats(gameStats, playerResult, dealerResult);
     readline.question('\nPress enter to proceed');
-  } while (gameStats.round < ROUNDS_PER_GAME &&
-           (gameStats.playerWins < ROUNDS_PER_GAME / 2) &&
-           (gameStats.dealerWins < ROUNDS_PER_GAME / 2));
-
+  } while (noGameWinner(gameStats));
 
   displayGameStatus(gameStats);
   displayGameWinner(gameStats);
 
   console.log("\n\nEnter 'y' to play another best of 5 contest, 'n' to exit");
-  let playAgain = readline.question('==> ').toLowerCase();
+  let playAgain = readline.question(prompt('')).toLowerCase();
   playAgain = validateAnswers(playAgain, ['y', 'n']);
   if (playAgain === 'n') break;
 }
-
 
 console.log('\nGame Over');

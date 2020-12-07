@@ -99,7 +99,6 @@ function findWinningSquare(board, contestantMarker) {
 }
 
 function computerChoosesSquare(board) {
-
   let computerWinningSquare = findWinningSquare(board, COMPUTER_MARKER);
   if (emptySquares(board).includes(computerWinningSquare)) {
     board[computerWinningSquare] = COMPUTER_MARKER;
@@ -119,6 +118,7 @@ function computerChoosesSquare(board) {
   let square;
   if (board[OPTIMAL_SQUARE] === INITIAL_MARKER) square = OPTIMAL_SQUARE;
   else square = availableSquares[randomIndex];
+
   board[square] = COMPUTER_MARKER;
 }
 
@@ -147,6 +147,14 @@ function detectWinner(board) {
   return null;
 }
 
+function determineMatchWinner(gamesLog) {
+  if (gamesLog.playergamesWon >= GAMES_TO_WIN_MATCH ||
+      gamesLog.computergamesWon >= GAMES_TO_WIN_MATCH) {
+    return (gamesLog.playergamesWon >= GAMES_TO_WIN_MATCH) ? 'Player' : 'Computer';
+  }
+  return null;
+}
+
 let gamesLog;
 while (true) {
   let playerTurnEnabled = !COMPUTER_PLAYS_FIRST;
@@ -156,9 +164,7 @@ while (true) {
   while (true) {
     displayBoard(board, gamesLog);
 
-    if (playerTurnEnabled) {
-      playerChoosesSquare(board);
-    }
+    if (playerTurnEnabled) playerChoosesSquare(board);
     playerTurnEnabled = true;
     if (detectWinner(board) === 'Player') gamesLog.playergamesWon += 1;
     else {
@@ -166,10 +172,7 @@ while (true) {
       if (detectWinner(board) === 'Computer') gamesLog.computergamesWon += 1;
     }
 
-    if (
-      gamesLog.playergamesWon >= GAMES_TO_WIN_MATCH ||
-      gamesLog.computergamesWon >= GAMES_TO_WIN_MATCH
-    ) break;
+    if (determineMatchWinner(gamesLog)) break;
 
     if (detectWinner(board)) {
       displayBoard(board, gamesLog);
@@ -180,18 +183,21 @@ while (true) {
     } else if (boardFull(board)) {
       displayBoard(board, gamesLog);
       prompt("It's a tie! \n    Press Enter to begin next game");
+      readline.question();
       board = initializeBoard();
     }
   }
 
-  let matchWinner = (gamesLog.playergamesWon >= GAMES_TO_WIN_MATCH) ?
-    'Player' : 'Computer';
   console.clear();
   displayBoard(board, gamesLog);
-  prompt(`!!! ${matchWinner} wins the match !!!\n`);
+  prompt(`!!! ${determineMatchWinner(gamesLog)} wins the match !!!\n`);
   prompt('Play again? (y or n)');
   let answer = readline.question().toLowerCase()[0];
-  if (answer !== 'y') break;
+  while (!['y', 'n'].includes(answer)) {
+    prompt(`${answer} is not a valid input, please enter 'y' or 'n'`);
+    answer = readline.question().toLowerCase()[0];
+  }
+  if (answer === 'n') break;
 }
 
 prompt('Thanks for playing Tic Tac Toe!');
