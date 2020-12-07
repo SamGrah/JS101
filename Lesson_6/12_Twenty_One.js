@@ -117,6 +117,10 @@ function dealHands(deck, playerHand, dealerHand) {
   dealCard(deck, dealerHand);
 }
 
+function dealerShouldHit(dealerHand) {
+  return (dealerHand.lowScore < DEALER_HIT_LIMIT) &&
+         (dealerHand.highScore !== HAND_TOP_SCORE);
+}
 
 function prompt(message) {
   console.log(`==> ${message}`);
@@ -200,12 +204,8 @@ while (true) {
     }
 
     if (scoreOutcome(playerHand) !== 'busted') {
-      while ((dealerHand.lowScore < DEALER_HIT_LIMIT) &&
-            (dealerHand.highScore !== HAND_TOP_SCORE)) {
-        let drawnCard = randomlySelectCard(deck);
-        deck[drawnCard] -= 1;
-        dealerHand.cards.push(drawnCard);
-        updateHandScores(dealerHand);
+      while (dealerShouldHit(dealerHand)) {
+        dealCard(deck, dealerHand);
       }
     }
 
@@ -223,7 +223,7 @@ while (true) {
   displayGameWinner(gameStats);
 
   console.log("\n\nEnter 'y' to play another best of 5 contest, 'n' to exit");
-  let playAgain = readline.question(prompt('')).toLowerCase();
+  let playAgain = readline.question('==> ').toLowerCase();
   playAgain = validateAnswers(playAgain, ['y', 'n']);
   if (playAgain === 'n') break;
 }
